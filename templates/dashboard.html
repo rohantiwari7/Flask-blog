@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>{{social_media['blog_name']}}</title>
+        <link rel="icon" type="image/x-icon" href=" {{url_for('static',filename= 'assets/favicon.ico') }} " />
+        <!-- Font Awesome icons (free version)-->
+        <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
+        <!-- Google fonts-->
+        <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
+        <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link href="{{url_for('static',filename='css/styles.css')}}" rel="stylesheet" />
+    </head>
+    <body>
+        <!-- Page Header-->
+        <!-- Main Content-->
+        <div class="container px-4 px-lg-5">
+            <div class="row gx-4 gx-lg-5 justify-content-center">
+                <div style="height:2rem"></div>
+                <div class="col-md-10 col-lg-8 col-xl-7">
+                    <h1 class="post-title" style="float:left;">Admin Panel</h1>
+                    <a href="/logout"><button style="float: right;" class="btn btn-primary" id="submitButton" type="submit">Logout</button></a>
+                    <!-- Add Posts -->
+                    <br>
+                    <br>
+                    <hr class="my-4" />
+                    <h3 class="post-title" >Create New post</h3>
+                    <a href="/edit/0"><button class="btn btn-primary" id="submitButton" type="submit">Add New-Post</button></a>
+                    <hr class="my-4" />
+                    <h3 class="post-title">Upload Photo</h3>
+                    <form action="/uploader" method="post" enctype="multipart/form-data">    
+                        <input type="file" name="file1">
+                        <button class="btn btn-primary" id="submitButton" type="submit" style="float: right;">Upload</button>
+                    </form>
+
+                    <!-- flash message starts here -->
+                    
+
+
+                    <!-- flash message ends here -->
+
+
+                    <hr class="my-4" />
+                    <!-- Post preview-->
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Title</th>
+                                <th scope="col">Date</th>
+                                <th scope="col">Edit</th>
+                                <th scope="col">Delete</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for post in posts %}
+                            <tr>
+                                <th scope="row">{{loop.index}}</th>
+                                <td>{{post.title}}</td>
+                                <td>{{post.date}}</td>
+                                <td><a href="/edit/{{post.sno}}"><button class=" btn-primary">Edit</button></a></td>
+                                <td><a href="/delete/{{post.sno}}"><button class=" btn-primary">Delete</button></a></td>
+                            </tr>
+                            {% endfor %}
+
+                        </tbody>
+                    </table>
+
+                    <!-- Divider-->
+                    <hr class="my-4" />
+
+                    <!-- Pager-->
+                    <!-- <div class=" mb-4" style="float: left;"><a class="btn btn-primary text-uppercase" href="#!">← Newer Posts</a></div> -->
+                    <!-- <div class=" mb-4" style="float: right;" ><a class="btn btn-primary text-uppercase" href="#!">Older Posts →</a></div> -->
+
+                </div>
+            </div>
+        </div>
