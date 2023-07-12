@@ -38,7 +38,7 @@ class Contacts(db.Model):
     email = db.Column(db.String(50), nullable=False)
     phone = db.Column(db.String(13), nullable=False)
     msg = db.Column(db.String, nullable=False)
-    # date = db.Column(db.String(12), nullable=True)
+    date = db.Column(db.String(12), nullable=True)
 
 
 class Posts(db.Model):
@@ -47,7 +47,7 @@ class Posts(db.Model):
     title = db.Column(db.String(60), nullable=False)
     content = db.Column(db.String(600), nullable=False)
     author = db.Column(db.String(30), nullable=False)
-    # date = db.Column(db.String(12), nullable=True)
+    date = db.Column(db.String(12), nullable=True)
     slug = db.Column(db.String(40), nullable=False)
     img_name = db.Column(db.String(35), nullable=True)
 
@@ -140,7 +140,7 @@ def edit(sno):
             img_name = request.form.get('img_name')
 
             if sno == '0':
-                post = Posts(title=title, content=content, slug=slug, author=author, img_name=img_name)
+                post = Posts(title=title, content=content, slug=slug, author=author, img_name=img_name, date=datetime.now())
                 db.session.add(post)
                 db.session.commit()
                 return redirect(url_for('dashboard'))
@@ -185,7 +185,7 @@ def uploader():
             if file and allowed_file(file.filename):
                 filename = secure_filename(file.filename)
                 file.save(os.path.join(params['upload_location'], filename))
-                return f"Uploaded Successfully!  saved with filename =>  {filename}", {"Refresh": "6,url=/dashboard"}
+                return f"Uploaded Successfully!  saved with filename =>  {filename}"  #, {"Refresh": "6,url=/dashboard"}
 
     return redirect('/dashboard')
 
@@ -202,7 +202,7 @@ def contact():
         email = request.form.get('email')
         phone = request.form.get('phone')
         message = request.form.get('message')
-        entry = Contacts(name=name, email=email, msg=message, phone=phone)
+        entry = Contacts(name=name, email=email, msg=message, phone=phone, date=datetime.now())
         db.session.add(entry)
         db.session.commit()
         mail.send_message(f'Message from {name}',
