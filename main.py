@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request, redirect, session, url_for, flash
 from flask_sqlalchemy import SQLAlchemy
-import json, secrets, os, math
+import json, os, math  #secrets,
 from flask_mail import Mail
 from datetime import datetime
 from werkzeug.utils import secure_filename
@@ -54,7 +54,7 @@ class Posts(db.Model):
 
 @app.route("/")
 def home():
-    posts = Posts.query.filter_by().all()    #[-social_media["no_of_posts"]:][::-1]
+    posts = Posts.query.all()    #[-social_media["no_of_posts"]:][::-1]
     last = int(math.ceil(len(posts)/int(social_media["no_of_posts"])))
     page = request.args.get('page')
     if not page:
@@ -78,7 +78,7 @@ def home():
         prev = '?page='+str(page-1)
         next = '?page='+str(page+1)
 
-    posts = Posts.query.filter_by().all()[::-1]
+    posts = posts[::-1]
     posts = posts[(page-1)*int(social_media["no_of_posts"]):page*int(social_media["no_of_posts"])]
     return render_template('index.html', social_media=social_media, posts=posts, prev=prev, next=next)
 
